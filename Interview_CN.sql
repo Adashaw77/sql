@@ -1,3 +1,6 @@
+
+
+##################1
 ##计算最大连续登录天数
 
 create table #Tmp_Data
@@ -31,3 +34,16 @@ From (
             Group By UID,Grp_No
       ) a
 Group By UID
+
+##################2
+##次日留存率
+select count(distinct b.user_id)/count(distinct a.user_id)
+from
+(select
+ user_id,
+ dt
+from t1
+where dt = '20180801') a
+left outer join
+(select user_id from t1 where dt = '20180802') b
+on  a.user_id = b.user_id 
